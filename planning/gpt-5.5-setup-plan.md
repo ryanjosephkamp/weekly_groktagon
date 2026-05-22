@@ -70,7 +70,7 @@ The README should include:
    - Use `assets/groktagon-logo.png`.
    - Prefer centered HTML for consistent GitHub rendering:
      - image source for root README rendering: `assets/groktagon-logo.png`
-     - GitHub Pages root path to verify during setup: `/assets/groktagon-logo.png`
+     - GitHub Pages root path to verify during setup: `/assets/groktagon-logo.png`; this depends on the deployment base path clarification in Section 14
      - alt text: `The Weekly Groktagon`
      - width near `220` unless the user requests a different size.
 2. Project title and short description.
@@ -200,7 +200,7 @@ The template should include:
 
 1. Logo at the top:
    - Use `/assets/groktagon-logo.png` in the final blog post template only if GitHub Pages is configured to serve this project from the domain root, matching the locked project requirement.
-   - If GitHub Pages is served from a project subpath, adjust the published path to include the subpath or use a repository-relative path such as `../../assets/groktagon-logo.png`; confirm the deployment base path before implementation.
+   - If GitHub Pages is served from a project subpath, adjust the published path to include the subpath; for direct repository preview from `weekly/YYYY-WXX/final-blog-post.md`, the expected repository-relative logo path is `../../assets/groktagon-logo.png`.
    - Include descriptive alt text.
    - Keep it as a header image or top-left branding, matching the project requirement.
 2. Title placeholder:
