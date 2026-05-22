@@ -192,6 +192,7 @@ def write_json(path: Path, data: Any) -> None:
 
 
 def bundle_timestamp(run_started_at: str) -> str:
+    """Convert the scraper's strict UTC timestamp format to the bundle filename format."""
     try:
         return datetime.strptime(run_started_at, "%Y%m%dT%H%M%SZ").strftime("%Y%m%d-%H%M%S")
     except ValueError as exc:
