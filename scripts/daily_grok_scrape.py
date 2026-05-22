@@ -192,7 +192,7 @@ def write_json(path: Path, data: Any) -> None:
 
 
 def bundle_timestamp(run_started_at: str) -> str:
-    return run_started_at.replace("T", "-").removesuffix("Z")
+    return datetime.strptime(run_started_at, "%Y%m%dT%H%M%SZ").strftime("%Y%m%d-%H%M%S")
 
 
 def generate_scrape_bundle_markdown(
