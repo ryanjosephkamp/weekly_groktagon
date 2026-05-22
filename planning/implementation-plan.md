@@ -48,6 +48,7 @@ weekly_groktagon/
 - **Sources**: Small stable list of official xAI pages (blog, docs, news, etc.)
 - **Tech**: Python + requests + trafilatura (preferred)
 - **Rules**: Polite scraping, error handling, only commit if new content, never commit `raw/` folder
+- Include the project logo (`assets/groktagon-logo.png`) in the expanded README.md and in the final blog post template.
 
 ## Success Criteria (End of 4-Week Pilot)
 - 4 complete public blog posts published
