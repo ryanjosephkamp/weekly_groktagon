@@ -55,7 +55,7 @@ Create the missing project folders required for the pilot:
    - Holds weekly issue folders.
 6. `weekly/YYYY-WXX/` example structure, if approved as a placeholder:
    - `reports/`
-   - `final-blog-post.md` template or example file only if the user wants a dated starter week.
+   - `final-blog-post.md` template or example file only if the user wants an initial dated week folder.
    - Do not create or commit `raw/` contents.
 
 If placeholder directories would otherwise be empty, add minimal `.gitkeep` files only in newly created non-raw folders that must be committed. Do not add `.gitkeep` inside `raw/` unless the user explicitly approves changing the private-data workflow.
@@ -127,7 +127,7 @@ The script should:
 
 1. Determine the ISO week folder name in `YYYY-WXX` format.
 2. Create `weekly/YYYY-WXX/raw/` locally at runtime.
-3. Fetch a small stable list of official xAI/Grok pages.
+3. Fetch a small stable list of official xAI/Grok pages maintained in a separate reviewed config file, such as `scripts/sources.json`, with each entry containing at minimum a source name and URL.
 4. Use `requests` and `trafilatura` if dependency approval and advisory review pass.
 5. Apply polite scraping practices:
    - descriptive user agent
@@ -199,8 +199,8 @@ Create a reusable final blog post template in `planning/prompts/final-blog-post-
 The template should include:
 
 1. Logo at the top:
-   - Use the project-specified GitHub Pages root path `/assets/groktagon-logo.png`.
-   - If final posts are intended to render directly from repository paths before Pages publication, verify whether `../../assets/groktagon-logo.png` is also needed for preview portability.
+   - Use `/assets/groktagon-logo.png` in the final blog post template because the primary rendering target is GitHub Pages.
+   - Use repository-relative paths such as `../../assets/groktagon-logo.png` only for optional local or direct GitHub repository previews, not as the default publication path.
    - Include descriptive alt text.
    - Keep it as a header image or top-left branding, matching the project requirement.
 2. Title placeholder:
