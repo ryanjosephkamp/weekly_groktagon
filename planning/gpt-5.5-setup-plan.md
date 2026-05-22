@@ -1,6 +1,6 @@
 # GPT-5.5 Setup Plan for The Weekly Groktagon
 
-**Status:** Draft setup plan for review. Do not execute until explicitly approved.
+**Status:** Updated setup plan for review. Do not execute until explicitly approved.
 
 ## References
 
@@ -8,6 +8,7 @@
 - `planning/implementation-plan.md` — locked v1.5 implementation plan, phase sequence, daily scrape technical specification, logo requirements.
 - `planning/constitutions/gpt-5.5-constitution.md` — role definition, allowed and forbidden file boundaries, citation discipline, verification requirements.
 - `assets/README.md` — current asset usage guidance for `assets/groktagon-logo.png`.
+- User clarification responses supplied on 2026-05-22 — approved scrape artifact handling, source list, workflow schedule, first pilot week folder, author links, Markdown-only publishing, logo path, logo placement, and recommended additions.
 
 ## 1. Setup Scope and Boundaries
 
@@ -17,12 +18,45 @@ The setup work must stay inside the allowed scaffolding role:
 
 - Create new files and folders needed for the project setup.
 - Expand `README.md`.
-- Modify only files created during the approved setup work, except for the allowed README expansion.
+- Modify only files created during the approved setup work, except for the allowed README expansion and this user-approved update to `planning/gpt-5.5-setup-plan.md`.
 - Do not modify or delete `Report-*.md`, `planning/PROJECT.md`, `planning/implementation-plan.md`, `planning/constitutions/gpt-5.5-constitution.md`, `.gitignore`, or any existing file not explicitly allowed.
 - Do not generate final public blog prose that lacks source traceability.
-- Do not commit raw scraped data.
+- Do not commit raw scraped data, sanitized summaries, scrape manifests, or other scrape outputs.
+- Do not begin implementation until the user explicitly approves execution after this plan-alignment phase is complete.
 
-## 2. Pre-Execution Verification
+## 2. Confirmed User Decisions
+
+The following decisions are now approved and should be treated as locked for setup unless the user changes them later:
+
+1. Raw scrape outputs must be stored only as GitHub Actions workflow artifacts and must never be committed to the repository.
+2. No sanitized summaries or manifests should be committed outside `raw/`.
+3. Initial official source list should be maintained in `scripts/sources.json` and include:
+   - `https://x.ai/`
+   - `https://x.ai/blog`
+   - `https://x.ai/news`
+   - `https://grok.x.ai/`
+   - `https://docs.x.ai/`
+   - `https://docs.x.ai/developers/release-notes`
+4. Daily workflow schedule should be `03:00 UTC`.
+5. Create the first real pilot week folder: `weekly/2026-W21/`.
+6. In `weekly/2026-W21/`, include:
+   - `reports/`
+   - a placeholder `final-blog-post.md` copied from the approved final blog post template structure.
+7. Do not commit `weekly/2026-W21/raw/` or any raw scrape data.
+8. Author links for README and templates:
+   - GitHub: `https://github.com/ryanjosephkamp`
+   - Personal website / portfolio: placeholder text until supplied.
+   - X / other social: placeholder text until supplied.
+9. Use plain Markdown rendering for now.
+10. Do not add Jekyll, `_config.yml`, or additional GitHub Pages configuration at this stage.
+11. Use the root-relative logo path `/assets/groktagon-logo.png` in README and all templates.
+12. Use a centered logo at the top of README and final blog post templates.
+13. Add a scraper dry-run mode before enabling normal execution.
+14. Keep source URLs in a small editable config file.
+15. Add a publication checklist.
+16. Treat the first week as an end-to-end pilot rehearsal before relying on automation for publication.
+
+## 3. Pre-Execution Verification
 
 Before any setup implementation begins:
 
@@ -30,6 +64,7 @@ Before any setup implementation begins:
    - `planning/PROJECT.md`
    - `planning/implementation-plan.md`
    - `planning/constitutions/gpt-5.5-constitution.md`
+   - `planning/gpt-5.5-setup-plan.md`
    - `assets/groktagon-logo.png`
    - `assets/README.md`
    - `.gitignore`
@@ -38,41 +73,41 @@ Before any setup implementation begins:
 3. Verify that `assets/groktagon-logo.png` exists before adding README or template references to it.
 4. Inspect `.gitignore` only to confirm `weekly/*/raw/` remains private; do not edit it unless the user explicitly approves.
 5. Identify any existing generated setup files to avoid overwriting user-authored work.
+6. Confirm this updated plan has no unresolved required clarification questions before execution.
 
-## 3. Target Folder and File Scaffolding
+## 4. Target Folder and File Scaffolding
 
 Create the missing project folders required for the pilot:
 
 1. `.github/workflows/`
    - Holds the daily scraping workflow.
 2. `scripts/`
-   - Holds project automation scripts.
+   - Holds project automation scripts and source configuration.
 3. `planning/prompts/`
    - Holds reusable report and synthesis prompt templates.
 4. `planning/docs/`
    - Holds operational documentation for the pilot.
 5. `weekly/`
    - Holds weekly issue folders.
-6. `weekly/YYYY-WXX/` example structure, if approved as a placeholder:
-   - `reports/`
-   - `final-blog-post.md` template or example file only if the user wants an initial dated week folder.
-   - Do not create or commit `raw/` contents.
+6. `weekly/2026-W21/`
+   - First real pilot week folder.
+7. `weekly/2026-W21/reports/`
+   - Holds committed weekly report drafts when the user adds them.
+8. `weekly/2026-W21/final-blog-post.md`
+   - Placeholder final blog post file copied from the approved template structure.
 
-If placeholder directories would otherwise be empty, add minimal `.gitkeep` files only in newly created non-raw folders that must be committed. Do not add `.gitkeep` inside `raw/` unless the user explicitly approves changing the private-data workflow.
+If placeholder directories would otherwise be empty, add minimal `.gitkeep` files only in newly created non-raw folders that must be committed. Do not add `.gitkeep` inside any `raw/` folder.
 
-## 4. README Expansion Plan
+## 5. README Expansion Plan
 
-Expand `README.md` into a clear public project landing page that introduces the blog and pilot without exposing internal workflow details beyond what is appropriate for readers.
+Expand `README.md` into a clear public project landing page that introduces the blog and pilot without exposing unnecessary internal workflow details.
 
 The README should include:
 
-1. Logo at the top:
-   - Use `assets/groktagon-logo.png`.
-   - Prefer centered HTML for consistent GitHub rendering:
-     - image source for root README rendering: `assets/groktagon-logo.png`
-     - GitHub Pages root path to verify during setup: `/assets/groktagon-logo.png`; this depends on the deployment base path clarification in Section 14, item 7
-     - alt text: `The Weekly Groktagon`
-     - width near `220` unless the user requests a different size.
+1. Centered logo at the top:
+   - Image path: `/assets/groktagon-logo.png`
+   - Alt text: `The Weekly Groktagon`
+   - Width near `220` unless the user requests a different size.
 2. Project title and short description.
 3. Pilot status.
 4. Publishing model:
@@ -84,71 +119,77 @@ The README should include:
    - references section
    - no raw scraped data in public commits
 6. Repository structure summary.
-7. Links section placeholders for:
-   - repository
-   - author GitHub profile
-   - personal site
-   - social profiles
-8. References section citing the planning sources used for README content if factual project claims are included.
+7. Links section:
+   - Repository link.
+   - Author GitHub profile: `https://github.com/ryanjosephkamp`
+   - Personal website / portfolio placeholder.
+   - X / other social placeholder.
+8. References section citing the planning sources used for README content.
 
 Avoid mentioning internal model assistance or process labels in public-facing README language.
 
-## 5. Daily Scraping Automation Plan
+## 6. Daily Scraping Automation Plan
 
 Create `.github/workflows/daily-grok-scrape.yml` with:
 
 1. Workflow name matching the project specification.
 2. Triggers:
-   - daily scheduled run at a fixed UTC time
+   - daily scheduled run at `03:00 UTC`
    - manual `workflow_dispatch`
 3. Permissions:
-   - minimum required permission to write repository contents if committing generated scrape artifacts is approved.
+   - minimum permissions needed to read repository contents and upload workflow artifacts.
+   - no repository write permission for scrape outputs because no scrape outputs should be committed.
 4. Runtime:
    - Python setup step
    - dependency installation step
    - scraper execution step
-   - conditional commit step only when generated output changes
+   - workflow artifact upload step for raw scrape outputs
 5. Safety rules:
-   - no raw data committed if `weekly/*/raw/` remains gitignored
+   - no raw data committed
+   - no sanitized summaries or manifests committed
    - polite request timing
    - clear nonzero failure on script errors
    - no secrets printed
 6. Debugging support:
-   - workflow summary showing scrape date, target week folder, source count, and whether changes were detected
-   - artifact upload only if the user approves retaining raw scrape outputs outside git
+   - workflow summary showing scrape date, target week folder, source count, dry-run status, and artifact name.
+   - artifact upload for raw scrape outputs only.
 
-Because the locked documents say raw scraped data belongs in `weekly/YYYY-WXX/raw/` but also must not be committed, implementation should clarify whether GitHub Actions should persist raw outputs as workflow artifacts, commit sanitized metadata elsewhere, or only run as a collection aid. This is a required clarification before final automation execution.
+The workflow must not run any commit step for scrape outputs.
 
-## 6. Scraper Script Plan
+## 7. Scraper Script Plan
 
 Create `scripts/daily_grok_scrape.py` to support the workflow.
 
 The script should:
 
-1. Determine the ISO week folder name in `YYYY-WXX` format.
-2. Manage the local runtime raw-data directory:
-   - create `weekly/YYYY-WXX/raw/` at runtime
-   - preserve the directory if it already exists
-   - never clean the directory automatically
-   - fail with a clear error if the directory cannot be created
-3. Fetch a small stable list of official xAI/Grok pages maintained in a separate reviewed config file, such as `scripts/sources.json`, with each entry containing at minimum a source name and URL.
-4. Use `requests` and `trafilatura` if dependency approval and advisory review pass.
-5. Apply polite scraping practices:
+1. Determine the ISO week folder name in `YYYY-WXX` format by default.
+2. Allow an optional output directory argument so GitHub Actions can write raw outputs to a temporary artifact staging directory instead of the repository working tree.
+3. Include a dry-run mode that validates configuration, resolves the target week, lists sources, and exits without fetching or writing scrape data.
+4. Use `scripts/sources.json` as the editable reviewed source list.
+5. Start with these source URLs:
+   - `https://x.ai/`
+   - `https://x.ai/blog`
+   - `https://x.ai/news`
+   - `https://grok.x.ai/`
+   - `https://docs.x.ai/`
+   - `https://docs.x.ai/developers/release-notes`
+6. Use `requests` and `trafilatura` if dependency approval and advisory review pass.
+7. Apply polite scraping practices:
    - descriptive user agent
    - request timeout
    - retry limits
    - delay between requests
-6. Save structured output per source with:
+8. Save structured raw output per source in the artifact staging directory with:
    - title, if extractable
    - URL
    - retrieval timestamp
    - extracted text or extraction error
    - metadata needed for traceability
-7. Maintain a machine-readable scrape manifest for debugging.
-8. Avoid copying large raw text into committed public files.
-9. Exit successfully when no source changes are detected and fail clearly on configuration or network errors that block the run.
+9. Maintain a machine-readable scrape manifest inside the artifact only, not in the repository.
+10. Avoid copying raw text into committed public files.
+11. Exit successfully when no source changes are detected and fail clearly on configuration or network errors that block the run.
 
-## 7. Dependency and Security Plan
+## 8. Dependency and Security Plan
 
 Before adding or pinning dependencies:
 
@@ -156,13 +197,14 @@ Before adding or pinning dependencies:
 2. Check supported ecosystems for advisories before adding dependencies.
 3. Prefer minimal dependencies:
    - `requests`
-   - `trafilatura`, using a current reviewed version if advisory checks pass. If advisory checks block it, stop and ask the user before choosing an alternate extraction library.
+   - `trafilatura`, using a current reviewed version if advisory checks pass.
 4. Add dependency declarations only if useful for repeatable automation, such as:
    - `requirements.txt`
 5. Avoid broad dependency updates unrelated to the scraper.
 6. Ensure scripts do not log secrets, tokens, or private raw content unnecessarily.
+7. If advisory checks identify a blocking issue, stop and ask the user before choosing an alternate extraction library.
 
-## 8. Prompt Template Plan
+## 9. Prompt Template Plan
 
 Create reusable internal prompt templates under `planning/prompts/`.
 
@@ -196,17 +238,16 @@ Every prompt template should require:
 - no raw data publication
 - exactly the intended report scope
 
-## 9. Final Blog Post Template Plan
+## 10. Final Blog Post Template Plan
 
 Create a reusable final blog post template in `planning/prompts/final-blog-post-template.md` or `planning/docs/final-blog-post-template.md`.
 
 The template should include:
 
-1. Logo at the top:
-   - Default to `../../assets/groktagon-logo.png` in `weekly/YYYY-WXX/final-blog-post.md` because that location-relative path works for direct repository preview and avoids GitHub Pages base-path ambiguity.
-   - During implementation, verify this against the locked requirement that GitHub Pages serves the logo asset at `/assets/groktagon-logo.png`; if the deployment requires a root-relative or subpath-specific URL, update the template path accordingly before publication.
-   - Include descriptive alt text.
-   - Keep it as a header image or top-left branding, matching the project requirement.
+1. Centered logo at the top:
+   - Image path: `/assets/groktagon-logo.png`
+   - Alt text: `The Weekly Groktagon`
+   - Width near `220` unless the user requests a different size.
 2. Title placeholder:
    - `# The Weekly Groktagon — YYYY-WXX`
 3. Publication date placeholder.
@@ -222,13 +263,19 @@ The template should include:
    - Practical Tutorials & Vibe-Coding Spotlight
    - Forward-Looking Signals & Roadmap Synthesis
 7. Conclusion placeholder.
-8. Links placeholder for repository, author GitHub, personal site, and social profiles.
+8. Links placeholder for:
+   - repository
+   - author GitHub profile: `https://github.com/ryanjosephkamp`
+   - personal website / portfolio placeholder
+   - X / other social placeholder
 9. `## References` placeholder.
 10. Pre-publication checklist requiring citation coverage and public/private separation verification.
 
 The template should not contain invented factual content. It should use placeholders where weekly facts will later be inserted from cited reports.
 
-## 10. Pilot Operations Documentation Plan
+Copy this same template structure into `weekly/2026-W21/final-blog-post.md` as empty placeholder content during execution.
+
+## 11. Pilot Operations Documentation Plan
 
 Create operational docs in `planning/docs/`:
 
@@ -237,80 +284,95 @@ Create operational docs in `planning/docs/`:
 2. `planning/docs/source-and-citation-guidelines.md`
    - Explains traceability, original wording, and reference expectations.
 3. `planning/docs/debugging-github-action.md`
-   - Explains how to manually dispatch the workflow, inspect logs, and diagnose scrape failures.
+   - Explains how to manually dispatch the workflow, inspect logs, retrieve workflow artifacts, and diagnose scrape failures.
 4. `planning/docs/publication-checklist.md`
    - Provides a repeatable checklist for each weekly final post.
 
 Each doc with factual project requirements should cite the locked planning files in a References section.
 
-## 11. Weekly Folder Preparation Plan
+## 12. Weekly Folder Preparation Plan
 
-For the 4-week pilot, prepare repeatable folder creation rather than manually hard-coding every future date unless the user approves fixed pilot week folders.
+Prepare `weekly/2026-W21/` as the first real pilot week folder.
 
-Recommended approach:
+During execution:
 
-1. Add a script such as `scripts/create_week_folder.py` or document a manual process.
-2. The script should create:
-   - `weekly/YYYY-WXX/reports/`
-   - placeholder report filenames only if approved
-   - a final blog post template copy only if approved
-3. Do not create committed raw data.
-4. Do not overwrite existing weekly folders or reports.
-5. Print clear next steps after folder creation.
+1. Create `weekly/2026-W21/reports/`.
+2. Add a `.gitkeep` file inside `weekly/2026-W21/reports/` if needed to commit the folder before report files exist.
+3. Create `weekly/2026-W21/final-blog-post.md` from the final blog post template structure.
+4. Do not create committed raw data.
+5. Do not create `weekly/2026-W21/raw/` unless the runtime scraper needs it locally; if created by a run, it must remain uncommitted due to `.gitignore`.
+6. Do not overwrite existing weekly folders or reports.
 
-## 12. Debugging and Validation Plan
+Also create a reusable script such as `scripts/create_week_folder.py` or document a manual process for future weeks. The script should not overwrite existing files.
+
+## 13. Debugging and Validation Plan
 
 After setup implementation, validate in this order:
 
 1. Repository safety check:
    - Confirm forbidden files were not modified.
    - Confirm no existing files were deleted.
+   - Confirm no scrape outputs were staged.
    - Confirm no `weekly/*/raw/` data was staged.
 2. Markdown review:
    - Confirm created docs include References sections where factual claims appear.
    - Confirm public-facing files avoid internal model attribution.
 3. Script validation:
    - Run Python syntax checks for new scripts.
-   - Run scraper in a safe dry-run mode if implemented.
+   - Run scraper dry-run mode.
+   - Confirm normal scraper output goes to an artifact staging directory, not a committed repo path.
 4. Workflow validation:
    - Check workflow YAML syntax where available.
    - Confirm scheduled and manual triggers exist.
+   - Confirm schedule is `03:00 UTC`.
+   - Confirm artifact upload exists.
+   - Confirm no commit step exists for scrape outputs.
 5. Git status review:
    - Verify only intended files changed.
 6. Final security validation:
    - Confirm no secrets, tokens, or private raw content are present.
    - Run available repository validation tools before finalizing.
 
-## 13. Suggested Execution Sequence After Approval
+## 14. Suggested Execution Sequence After Final Approval
 
 1. Re-read locked planning files and verify current repo state.
 2. Create missing scaffold folders.
-3. Expand `README.md` with logo and public project overview.
-4. Create final blog post template with logo placeholder.
-5. Create prompt templates for all 8 reports and final synthesis.
-6. Create pilot operations docs.
-7. Add scraper dependency declaration after advisory review.
-8. Create scraper script with dry-run support.
-9. Create GitHub Actions workflow.
-10. Run validation checks.
-11. Review changed files against forbidden-file boundaries.
-12. Report completion with any unresolved questions.
+3. Expand `README.md` with centered logo and public project overview.
+4. Create final blog post template with centered logo.
+5. Create `weekly/2026-W21/reports/`.
+6. Create `weekly/2026-W21/final-blog-post.md` placeholder from the final blog post template.
+7. Create prompt templates for all 8 reports and final synthesis.
+8. Create pilot operations docs.
+9. Add scraper dependency declaration after advisory review.
+10. Create `scripts/sources.json`.
+11. Create scraper script with dry-run support and artifact-staging output support.
+12. Create GitHub Actions workflow with daily `03:00 UTC` schedule and artifact upload.
+13. Run validation checks.
+14. Review changed files against forbidden-file boundaries.
+15. Report completion with any unresolved issues.
 
-## 14. Open Clarifications Before Execution
+## 15. Remaining Clarification Questions Before Execution
 
-1. Should daily scrape outputs be stored only as workflow artifacts, or should sanitized summaries/manifests be committed somewhere outside `raw/`?
-2. Which official xAI/Grok source URLs should be included in the initial stable source list?
-3. What fixed UTC time should the daily workflow use, preferably an off-peak time that avoids expected source-site maintenance windows and unnecessary load?
-4. Should the setup create a first real `weekly/YYYY-WXX/` folder for the current week, or only reusable templates and scripts?
-5. What author links should appear in README and final blog post templates?
-6. Should GitHub Pages use plain Markdown rendering only, or should the setup add a Pages/Jekyll configuration later?
-7. Will GitHub Pages serve the site from the domain root or from a repository subpath? This determines whether the final blog post template should keep the location-relative logo path or use a deployment-specific logo URL.
-8. Should the final blog post logo be centered at the top or placed as compact top-left branding?
+No required clarification questions remain before execution.
 
-## 15. Recommended Additions
+Optional refinements the user may provide now or later:
 
-1. Add a dry-run mode to the scraper before enabling any commit behavior.
-2. Keep source lists in a small editable config file so updates do not require changing scraper logic.
-3. Add a publication checklist that must be completed before each public final post.
-4. Use workflow artifacts for raw scrape output unless the user approves another private retention strategy.
-5. Treat the first week as an end-to-end pilot rehearsal before relying on automation for publication.
+1. Personal website / portfolio URL to replace the placeholder.
+2. X or other social URL to replace the placeholder.
+3. Preferred workflow artifact retention period, if different from the GitHub default.
+4. Preferred logo display width, if different from approximately `220`.
+
+## 16. Remaining Recommendations
+
+No blocking recommendations remain before execution.
+
+Optional non-blocking recommendations:
+
+1. Use a short artifact retention period for raw scrape outputs unless longer retention is needed for weekly review.
+2. Review the first workflow artifact manually after the first run to confirm the scrape output format is useful before relying on it for the full pilot.
+3. Keep the official source list intentionally small during Week 1, then expand only after the pilot workflow is stable.
+4. Replace placeholder author links before the first public launch.
+
+## 17. Plan Alignment Status
+
+This plan is ready for final review. If the user approves execution with the current optional placeholders and recommendations, setup can begin without additional required clarification.
