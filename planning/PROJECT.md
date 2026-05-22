@@ -48,6 +48,7 @@ Each Sunday the user provides Grok with the current week’s folder contents. Gr
 ```
 weekly_groktagon/
 ├── .github/workflows/               # Daily scraping Action (created by GPT-5.5)
+├── assets/                          # Static assets (logo, images, etc.)
 ├── planning/
 │   ├── PROJECT.md                   # ← This file (complete project context)
 │   ├── implementation-plan.md
@@ -63,6 +64,14 @@ weekly_groktagon/
 ├── .gitignore
 └── README.md                        # Minimal at first (GPT-5.5 will expand)
 ```
+
+## 3.5 Branding & Assets
+- **Logo**: `assets/groktagon-logo.png` (white geometric icon on black background)
+- The logo must appear at the top of:
+  - The main `README.md`
+  - Every final `final-blog-post.md` (as header image or top-left branding)
+- GitHub Pages will serve the logo via the relative path `/assets/groktagon-logo.png`
+- No other branding assets are required at this time.
 
 ## 4. GPT-5.5 Responsibilities (Scaffolding & Automation Agent)
 You (GPT-5.5) are responsible for:
