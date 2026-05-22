@@ -4,7 +4,7 @@
 
 # The Weekly Groktagon — YYYY-WXX
 
-**Publication date:** YYYY-MM-DD
+**Publication date:** YYYY-MM-DD [use the publication date for this weekly edition; for 2026-W21, the ISO week is 2026-05-18 through 2026-05-24]
 
 ## Introduction
 
