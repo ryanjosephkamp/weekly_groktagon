@@ -57,6 +57,7 @@ jobs:
           print(f"- Source count: `{summary['source_count']}`")
           print(f"- Dry run: `{summary['dry_run']}`")
           print(f"- Artifact file count: `{summary['artifact_file_count']}`")
+          print(f"- Bundle file: `{summary.get('bundle_file', 'not generated')}`")
           print(f"- Artifact name: `{artifact_name}`")
           PY
         env:
