@@ -69,7 +69,8 @@ The README should include:
 1. Logo at the top:
    - Use `assets/groktagon-logo.png`.
    - Prefer centered HTML for consistent GitHub rendering:
-     - image source: `/assets/groktagon-logo.png`
+     - image source for root README rendering: `assets/groktagon-logo.png`
+     - GitHub Pages root path to verify during setup: `/assets/groktagon-logo.png`
      - alt text: `The Weekly Groktagon`
      - width near `220` unless the user requests a different size.
 2. Project title and short description.
@@ -198,7 +199,8 @@ Create a reusable final blog post template in `planning/prompts/final-blog-post-
 The template should include:
 
 1. Logo at the top:
-   - Use `/assets/groktagon-logo.png`.
+   - Use the project-specified GitHub Pages root path `/assets/groktagon-logo.png`.
+   - If final posts are intended to render directly from repository paths before Pages publication, verify whether `../../assets/groktagon-logo.png` is also needed for preview portability.
    - Include descriptive alt text.
    - Keep it as a header image or top-left branding, matching the project requirement.
 2. Title placeholder:
