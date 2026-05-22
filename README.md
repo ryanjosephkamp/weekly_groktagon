@@ -17,6 +17,18 @@ The project is in active setup for a 4-week pilot. Public launch is planned afte
 - Weekly content lives under `weekly/YYYY-WXX/`.
 - Source collection output is kept out of public commits and handled through private workflow artifacts.
 
+## Daily Source Collection
+
+The daily source collection workflow now uses the optimized official xAI source list configured in `scripts/sources.json`:
+
+- xAI home: <https://x.ai/>
+- xAI blog: <https://x.ai/blog>
+- xAI docs: <https://docs.x.ai/>
+- xAI developer release notes: <https://docs.x.ai/developers/release-notes>
+- xAI API: <https://x.ai/api>
+
+Each workflow artifact includes the individual source JSON files, `manifest.json`, and a consolidated Markdown bundle named with the `scrape-bundle-YYYY-WXX-YYYYMMDD-HHMMSS.md` pattern. Raw scrape outputs and scrape-derived artifacts remain private workflow artifacts and must not be committed.
+
 ## Public Content Standards
 
 Every public post should follow these standards:
@@ -54,4 +66,7 @@ weekly_groktagon/
 - `planning/PROJECT.md`
 - `planning/implementation-plan.md`
 - `planning/gpt-5.5-setup-plan.md`
+- `planning/docs/scrape-bundle-artifact-addendum.md`
+- `planning/docs/scrape-sources-optimization-addendum.md`
+- `scripts/sources.json`
 - `assets/README.md`
