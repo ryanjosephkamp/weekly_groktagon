@@ -126,7 +126,7 @@ Create `scripts/daily_grok_scrape.py` to support the workflow.
 The script should:
 
 1. Determine the ISO week folder name in `YYYY-WXX` format.
-2. Create `weekly/YYYY-WXX/raw/` locally at runtime.
+2. Create `weekly/YYYY-WXX/raw/` locally at runtime; preserve the directory if it already exists, never clean it automatically, and fail with a clear error if the directory cannot be created.
 3. Fetch a small stable list of official xAI/Grok pages maintained in a separate reviewed config file, such as `scripts/sources.json`, with each entry containing at minimum a source name and URL.
 4. Use `requests` and `trafilatura` if dependency approval and advisory review pass.
 5. Apply polite scraping practices:
@@ -152,7 +152,7 @@ Before adding or pinning dependencies:
 2. Check supported ecosystems for advisories before adding dependencies.
 3. Prefer minimal dependencies:
    - `requests`
-   - `trafilatura`, if still preferred after advisory review
+   - `trafilatura`, using a current reviewed version if advisory checks pass; if advisory checks block it, stop and ask the user before choosing an alternate extraction library
 4. Add dependency declarations only if useful for repeatable automation, such as:
    - `requirements.txt`
 5. Avoid broad dependency updates unrelated to the scraper.
@@ -199,8 +199,8 @@ Create a reusable final blog post template in `planning/prompts/final-blog-post-
 The template should include:
 
 1. Logo at the top:
-   - Use `/assets/groktagon-logo.png` in the final blog post template because the primary rendering target is GitHub Pages.
-   - Use repository-relative paths such as `../../assets/groktagon-logo.png` only for optional local or direct GitHub repository previews, not as the default publication path.
+   - Use `/assets/groktagon-logo.png` in the final blog post template only if GitHub Pages is configured to serve this project from the domain root, matching the locked project requirement.
+   - If GitHub Pages is served from a project subpath, adjust the published path to include the subpath or use a repository-relative path such as `../../assets/groktagon-logo.png`; confirm the deployment base path before implementation.
    - Include descriptive alt text.
    - Keep it as a header image or top-left branding, matching the project requirement.
 2. Title placeholder:
@@ -296,11 +296,12 @@ After setup implementation, validate in this order:
 
 1. Should daily scrape outputs be stored only as workflow artifacts, or should sanitized summaries/manifests be committed somewhere outside `raw/`?
 2. Which official xAI/Grok source URLs should be included in the initial stable source list?
-3. What fixed UTC time should the daily workflow use?
+3. What fixed UTC time should the daily workflow use, preferably an off-peak time that avoids expected source-site maintenance windows and unnecessary load?
 4. Should the setup create a first real `weekly/YYYY-WXX/` folder for the current week, or only reusable templates and scripts?
 5. What author links should appear in README and final blog post templates?
 6. Should GitHub Pages use plain Markdown rendering only, or should the setup add a Pages/Jekyll configuration later?
-7. Should the final blog post logo be centered at the top or placed as compact top-left branding?
+7. Will GitHub Pages serve the site from the domain root or from a repository subpath?
+8. Should the final blog post logo be centered at the top or placed as compact top-left branding?
 
 ## 15. Recommended Additions
 
