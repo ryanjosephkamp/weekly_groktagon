@@ -192,7 +192,10 @@ def write_json(path: Path, data: Any) -> None:
 
 
 def bundle_timestamp(run_started_at: str) -> str:
-    return datetime.strptime(run_started_at, "%Y%m%dT%H%M%SZ").strftime("%Y%m%d-%H%M%S")
+    try:
+        return datetime.strptime(run_started_at, "%Y%m%dT%H%M%SZ").strftime("%Y%m%d-%H%M%S")
+    except ValueError as exc:
+        raise ValueError("run_started_at must use YYYYMMDDTHHMMSSZ format") from exc
 
 
 def generate_scrape_bundle_markdown(
