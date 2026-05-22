@@ -191,6 +191,63 @@ def write_json(path: Path, data: Any) -> None:
     path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def bundle_timestamp(run_started_at: str) -> str:
+    return run_started_at.replace("T", "-").removesuffix("Z")
+
+
+def generate_scrape_bundle_markdown(
+    *,
+    output_dir: Path,
+    target_week: str,
+    run_started_at: str,
+    manifest: dict[str, Any],
+    source_results: list[tuple[str, dict[str, Any]]],
+    blocking_failures: int,
+) -> str:
+    bundle_filename = f"scrape-bundle-{target_week}-{bundle_timestamp(run_started_at)}.md"
+    status = "All sources successful" if blocking_failures == 0 else f"{blocking_failures} source(s) reported errors"
+    lines = [
+        f"# Weekly Grok Scrape Results — {target_week}",
+        "",
+        f"**Run started:** {run_started_at}  ",
+        f"**Source count:** {manifest['source_count']}  ",
+        f"**Status:** {status}",
+        "",
+        "## Instructions for GPT-5.5",
+        "",
+        "Use only the content in this scrape bundle and its embedded source metadata when drafting Report 1. "
+        "Treat the embedded JSON as raw source material, preserve citation traceability to the listed source URLs "
+        "and files, use original wording, and do not publish raw scrape text wholesale.",
+        "",
+        "---",
+        "",
+        "## manifest.json",
+        "",
+        "```json",
+        json.dumps(manifest, indent=2, sort_keys=True),
+        "```",
+        "",
+        "---",
+        "",
+    ]
+
+    for filename, result in source_results:
+        lines.extend(
+            [
+                f"## {filename}",
+                "",
+                "```json",
+                json.dumps(result, indent=2, sort_keys=True),
+                "```",
+                "",
+            ]
+        )
+
+    lines.extend(["---", "", "**End of scrape bundle**", ""])
+    (output_dir / bundle_filename).write_text("\n".join(lines), encoding="utf-8")
+    return bundle_filename
+
+
 def build_summary(
     *,
     run_started_at: str,
@@ -199,8 +256,9 @@ def build_summary(
     output_dir: str | None,
     dry_run: bool,
     artifact_file_count: int,
+    bundle_file: str | None = None,
 ) -> dict[str, Any]:
-    return {
+    summary = {
         "run_started_at": run_started_at,
         "target_week": target_week,
         "source_count": source_count,
@@ -208,6 +266,9 @@ def build_summary(
         "dry_run": dry_run,
         "artifact_file_count": artifact_file_count,
     }
+    if bundle_file:
+        summary["bundle_file"] = bundle_file
+    return summary
 
 
 def main() -> int:
@@ -243,11 +304,13 @@ def main() -> int:
     session.headers.update({"User-Agent": DEFAULT_USER_AGENT})
 
     manifest_entries: list[dict[str, Any]] = []
+    source_results: list[tuple[str, dict[str, Any]]] = []
     blocking_failures = 0
     for index, source in enumerate(sources, start=1):
         result = fetch_source(session, source, args.timeout, args.retries)
         filename = f"{index:02d}-{safe_slug(source.name)}.json"
         write_json(output_dir / filename, result)
+        source_results.append((filename, result))
         manifest_entries.append(
             {
                 "name": source.name,
@@ -270,6 +333,14 @@ def main() -> int:
         "sources": manifest_entries,
     }
     write_json(output_dir / "manifest.json", manifest)
+    bundle_file = generate_scrape_bundle_markdown(
+        output_dir=output_dir,
+        target_week=target_week,
+        run_started_at=run_started_at,
+        manifest=manifest,
+        source_results=source_results,
+        blocking_failures=blocking_failures,
+    )
 
     summary = build_summary(
         run_started_at=run_started_at,
@@ -277,7 +348,8 @@ def main() -> int:
         source_count=len(sources),
         output_dir=str(output_dir),
         dry_run=False,
-        artifact_file_count=len(manifest_entries) + 1,
+        artifact_file_count=len(manifest_entries) + 2,
+        bundle_file=bundle_file,
     )
     if args.summary_file:
         write_json(Path(args.summary_file), summary)
