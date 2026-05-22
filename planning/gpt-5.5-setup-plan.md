@@ -8,7 +8,7 @@
 - `planning/implementation-plan.md` — locked v1.5 implementation plan, phase sequence, daily scrape technical specification, logo requirements.
 - `planning/constitutions/gpt-5.5-constitution.md` — role definition, allowed and forbidden file boundaries, citation discipline, verification requirements.
 - `assets/README.md` — current asset usage guidance for `assets/groktagon-logo.png`.
-- User clarification responses supplied on 2026-05-22 — approved scrape artifact handling, source list, workflow schedule, first pilot week folder, author links, Markdown-only publishing, logo path, logo placement, and recommended additions.
+- User clarification responses supplied on 2026-05-22 — approved scrape artifact handling, source list, workflow schedule, first pilot week folder, author links, Markdown-only publishing, logo path, logo placement, artifact retention, logo width, and recommended additions.
 
 ## 1. Setup Scope and Boundaries
 
@@ -45,8 +45,11 @@ The following decisions are now approved and should be treated as locked for set
 7. Do not commit `weekly/2026-W21/raw/` or any raw scrape data.
 8. Author links for README and templates:
    - GitHub: `https://github.com/ryanjosephkamp`
-   - Personal website / portfolio: placeholder text until supplied.
-   - X / other social: placeholder text until supplied.
+   - Personal website / portfolio: `https://ryanjosephkamp.github.io/`
+   - X: `https://x.com/ryanjosephkamp`
+   - LinkedIn: `https://www.linkedin.com/in/rjk1999/`
+   - YouTube: `https://www.youtube.com/@RyanJosephKamp`
+   - Hugging Face: `https://huggingface.co/ryanjosephkamp`
 9. Use plain Markdown rendering for now.
 10. Do not add Jekyll, `_config.yml`, or additional GitHub Pages configuration at this stage.
 11. Use the root-relative logo path `/assets/groktagon-logo.png` in README and all templates.
@@ -55,6 +58,10 @@ The following decisions are now approved and should be treated as locked for set
 14. Keep source URLs in a small editable config file.
 15. Add a publication checklist.
 16. Treat the first week as an end-to-end pilot rehearsal before relying on automation for publication.
+17. Use the GitHub default artifact retention period for workflow artifacts.
+18. Use an approximate logo display width of `220`.
+19. Manually review the first workflow artifact after the first run before relying on the workflow for the full pilot.
+20. Keep the official source list intentionally small during Week 1 and expand only after the pilot workflow is stable.
 
 ## 3. Pre-Execution Verification
 
@@ -107,7 +114,7 @@ The README should include:
 1. Centered logo at the top:
    - Image path: `/assets/groktagon-logo.png`
    - Alt text: `The Weekly Groktagon`
-   - Width near `220` unless the user requests a different size.
+   - Display width approximately `220`.
 2. Project title and short description.
 3. Pilot status.
 4. Publishing model:
@@ -122,8 +129,11 @@ The README should include:
 7. Links section:
    - Repository link.
    - Author GitHub profile: `https://github.com/ryanjosephkamp`
-   - Personal website / portfolio placeholder.
-   - X / other social placeholder.
+   - Personal website / portfolio: `https://ryanjosephkamp.github.io/`
+   - X: `https://x.com/ryanjosephkamp`
+   - LinkedIn: `https://www.linkedin.com/in/rjk1999/`
+   - YouTube: `https://www.youtube.com/@RyanJosephKamp`
+   - Hugging Face: `https://huggingface.co/ryanjosephkamp`
 8. References section citing the planning sources used for README content.
 
 Avoid mentioning internal model assistance or process labels in public-facing README language.
@@ -154,7 +164,7 @@ Create `.github/workflows/daily-grok-scrape.yml` with:
    - workflow summary showing scrape date, target week folder, source count, dry-run status, and artifact name.
    - artifact upload for raw scrape outputs only.
 
-The workflow must not run any commit step for scrape outputs.
+The workflow must not run any commit step for scrape outputs. Do not set a custom artifact retention period during setup; use the GitHub default unless the user later approves a different retention policy.
 
 ## 7. Scraper Script Plan
 
@@ -247,7 +257,7 @@ The template should include:
 1. Centered logo at the top:
    - Image path: `/assets/groktagon-logo.png`
    - Alt text: `The Weekly Groktagon`
-   - Width near `220` unless the user requests a different size.
+   - Display width approximately `220`.
 2. Title placeholder:
    - `# The Weekly Groktagon — YYYY-WXX`
 3. Publication date placeholder.
@@ -266,8 +276,11 @@ The template should include:
 8. Links placeholder for:
    - repository
    - author GitHub profile: `https://github.com/ryanjosephkamp`
-   - personal website / portfolio placeholder
-   - X / other social placeholder
+   - personal website / portfolio: `https://ryanjosephkamp.github.io/`
+   - X: `https://x.com/ryanjosephkamp`
+   - LinkedIn: `https://www.linkedin.com/in/rjk1999/`
+   - YouTube: `https://www.youtube.com/@RyanJosephKamp`
+   - Hugging Face: `https://huggingface.co/ryanjosephkamp`
 9. `## References` placeholder.
 10. Pre-publication checklist requiring citation coverage and public/private separation verification.
 
@@ -326,6 +339,7 @@ After setup implementation, validate in this order:
    - Confirm scheduled and manual triggers exist.
    - Confirm schedule is `03:00 UTC`.
    - Confirm artifact upload exists.
+   - Confirm workflow artifact retention uses the GitHub default.
    - Confirm no commit step exists for scrape outputs.
 5. Git status review:
    - Verify only intended files changed.
@@ -349,30 +363,19 @@ After setup implementation, validate in this order:
 12. Create GitHub Actions workflow with daily `03:00 UTC` schedule and artifact upload.
 13. Run validation checks.
 14. Review changed files against forbidden-file boundaries.
-15. Report completion with any unresolved issues.
+15. After the first workflow run, manually review the first artifact before relying on the workflow for the full pilot.
+16. Report completion with any unresolved issues.
 
 ## 15. Remaining Clarification Questions Before Execution
 
 No required clarification questions remain before execution.
 
-Optional refinements the user may provide now or later:
-
-1. Personal website / portfolio URL to replace the placeholder.
-2. X or other social URL to replace the placeholder.
-3. Preferred workflow artifact retention period, if different from the GitHub default.
-4. Preferred logo display width, if different from approximately `220`.
+No optional clarification questions remain before execution.
 
 ## 16. Remaining Recommendations
 
-No blocking recommendations remain before execution.
-
-Optional non-blocking recommendations:
-
-1. Use a short artifact retention period for raw scrape outputs unless longer retention is needed for weekly review.
-2. Review the first workflow artifact manually after the first run to confirm the scrape output format is useful before relying on it for the full pilot.
-3. Keep the official source list intentionally small during Week 1, then expand only after the pilot workflow is stable.
-4. Replace placeholder author links before the first public launch.
+No blocking or non-blocking recommendations remain before execution. The previously listed non-blocking recommendations have been approved and incorporated into the setup plan.
 
 ## 17. Plan Alignment Status
 
-This plan is ready for final review. If the user approves execution with the current optional placeholders and recommendations, setup can begin without additional required clarification.
+This plan is fully aligned for execution. If the user explicitly approves execution, setup can begin without additional clarification questions or recommendations.
