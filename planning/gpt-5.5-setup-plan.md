@@ -199,9 +199,8 @@ Create a reusable final blog post template in `planning/prompts/final-blog-post-
 The template should include:
 
 1. Logo at the top:
-   - Use `/assets/groktagon-logo.png` in the final blog post template only if GitHub Pages is configured to serve this project from the domain root, matching the locked project requirement.
-   - If GitHub Pages is served from a project subpath, adjust the published path to include the subpath.
-   - For direct repository preview from `weekly/YYYY-WXX/final-blog-post.md`, the expected repository-relative logo path is `../../assets/groktagon-logo.png`.
+   - Default to `../../assets/groktagon-logo.png` in `weekly/YYYY-WXX/final-blog-post.md` because that location-relative path works for direct repository preview and avoids GitHub Pages base-path ambiguity.
+   - During implementation, verify this against the locked requirement that GitHub Pages serves the logo asset at `/assets/groktagon-logo.png`; if the deployment requires a root-relative or subpath-specific URL, update the template path accordingly before publication.
    - Include descriptive alt text.
    - Keep it as a header image or top-left branding, matching the project requirement.
 2. Title placeholder:
@@ -301,7 +300,7 @@ After setup implementation, validate in this order:
 4. Should the setup create a first real `weekly/YYYY-WXX/` folder for the current week, or only reusable templates and scripts?
 5. What author links should appear in README and final blog post templates?
 6. Should GitHub Pages use plain Markdown rendering only, or should the setup add a Pages/Jekyll configuration later?
-7. Will GitHub Pages serve the site from the domain root or from a repository subpath?
+7. Will GitHub Pages serve the site from the domain root or from a repository subpath? This determines whether the final blog post template should keep the location-relative logo path or use a deployment-specific logo URL.
 8. Should the final blog post logo be centered at the top or placed as compact top-left branding?
 
 ## 15. Recommended Additions
