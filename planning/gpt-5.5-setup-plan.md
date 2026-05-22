@@ -152,7 +152,7 @@ Before adding or pinning dependencies:
 2. Check supported ecosystems for advisories before adding dependencies.
 3. Prefer minimal dependencies:
    - `requests`
-   - `trafilatura`, using a current reviewed version if advisory checks pass; if advisory checks block it, stop and ask the user before choosing an alternate extraction library
+   - `trafilatura`, using a current reviewed version if advisory checks pass. If advisory checks block it, stop and ask the user before choosing an alternate extraction library.
 4. Add dependency declarations only if useful for repeatable automation, such as:
    - `requirements.txt`
 5. Avoid broad dependency updates unrelated to the scraper.
@@ -200,7 +200,8 @@ The template should include:
 
 1. Logo at the top:
    - Use `/assets/groktagon-logo.png` in the final blog post template only if GitHub Pages is configured to serve this project from the domain root, matching the locked project requirement.
-   - If GitHub Pages is served from a project subpath, adjust the published path to include the subpath; for direct repository preview from `weekly/YYYY-WXX/final-blog-post.md`, the expected repository-relative logo path is `../../assets/groktagon-logo.png`.
+   - If GitHub Pages is served from a project subpath, adjust the published path to include the subpath.
+   - For direct repository preview from `weekly/YYYY-WXX/final-blog-post.md`, the expected repository-relative logo path is `../../assets/groktagon-logo.png`.
    - Include descriptive alt text.
    - Keep it as a header image or top-left branding, matching the project requirement.
 2. Title placeholder:
