@@ -215,7 +215,8 @@ def generate_scrape_bundle_markdown(
         "",
         "## Instructions for GPT-5.5",
         "",
-        "Use only the content in this scrape bundle and its embedded source metadata when drafting Report 1. "
+        "Use only the content in this scrape bundle and its embedded source metadata when drafting Report 1 "
+        "(Official xAI Sources Summary). "
         "Treat the embedded JSON as raw source material, preserve citation traceability to the listed source URLs "
         "and files, use original wording, and do not publish raw scrape text wholesale.",
         "",
