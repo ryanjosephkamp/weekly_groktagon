@@ -1,0 +1,71 @@
+name: Daily Grok Scrape
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scrape:
+    name: Collect official source pages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install --requirement requirements.txt
+
+      - name: Run scraper into artifact staging directory
+        id: scrape
+        run: |
+          set -euo pipefail
+          output_dir="${RUNNER_TEMP}/groktagon-raw"
+          summary_file="${RUNNER_TEMP}/groktagon-summary.json"
+          python scripts/daily_grok_scrape.py --output-dir "$output_dir" --summary-file "$summary_file"
+          week="$(python -c "import json; print(json.load(open('${summary_file}'))['target_week'])")"
+          started="$(python -c "import json; print(json.load(open('${summary_file}'))['run_started_at'])")"
+          artifact_name="groktagon-raw-${week}-${started}"
+          echo "output_dir=${output_dir}" >> "$GITHUB_OUTPUT"
+          echo "summary_file=${summary_file}" >> "$GITHUB_OUTPUT"
+          echo "target_week=${week}" >> "$GITHUB_OUTPUT"
+          echo "artifact_name=${artifact_name}" >> "$GITHUB_OUTPUT"
+
+      - name: Write workflow summary
+        run: |
+          set -euo pipefail
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          import os
+          from pathlib import Path
+
+          summary = json.loads(Path(os.environ["SUMMARY_FILE"]).read_text(encoding="utf-8"))
+          artifact_name = os.environ["ARTIFACT_NAME"]
+          print("## Daily source collection")
+          print("")
+          print(f"- Target week: `{summary['target_week']}`")
+          print(f"- Source count: `{summary['source_count']}`")
+          print(f"- Dry run: `{summary['dry_run']}`")
+          print(f"- Artifact file count: `{summary['artifact_file_count']}`")
+          print(f"- Artifact name: `{artifact_name}`")
+          PY
+        env:
+          SUMMARY_FILE: ${{ steps.scrape.outputs.summary_file }}
+          ARTIFACT_NAME: ${{ steps.scrape.outputs.artifact_name }}
+
+      - name: Upload raw scrape artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: ${{ steps.scrape.outputs.artifact_name }}
+          path: ${{ steps.scrape.outputs.output_dir }}
+          if-no-files-found: error
