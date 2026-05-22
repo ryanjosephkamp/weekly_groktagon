@@ -38,7 +38,7 @@ This addendum modifies the data handling behavior of the daily scraping workflow
 
 The generated Markdown file must follow this general structure (exact formatting and header instructions to be finalized):
 
-```markdown
+``````markdown
 # Weekly Grok Scrape Results — 2026-W21
 
 **Run started:** [timestamp]  
@@ -76,7 +76,7 @@ The generated Markdown file must follow this general structure (exact formatting
 ---
 
 **End of scrape bundle**
-```
+``````
 
 > **Note:** The user will insert the final detailed format (including exact header text and any additional instructions for GPT-5.5) into this section before the addendum is considered complete.
 
@@ -104,6 +104,5 @@ The generated Markdown file must follow this general structure (exact formatting
 ## Notes
 
 This change improves usability for both the human user and the GPT-5.5 agent while preserving the core privacy and non-pollution principles of the original plan.
-```
 
 ---
