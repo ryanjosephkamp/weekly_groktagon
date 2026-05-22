@@ -70,7 +70,7 @@ The README should include:
    - Use `assets/groktagon-logo.png`.
    - Prefer centered HTML for consistent GitHub rendering:
      - image source for root README rendering: `assets/groktagon-logo.png`
-     - GitHub Pages root path to verify during setup: `/assets/groktagon-logo.png`; this depends on the deployment base path clarification in Section 14
+     - GitHub Pages root path to verify during setup: `/assets/groktagon-logo.png`; this depends on the deployment base path clarification in Section 14, item 7
      - alt text: `The Weekly Groktagon`
      - width near `220` unless the user requests a different size.
 2. Project title and short description.
@@ -126,7 +126,11 @@ Create `scripts/daily_grok_scrape.py` to support the workflow.
 The script should:
 
 1. Determine the ISO week folder name in `YYYY-WXX` format.
-2. Create `weekly/YYYY-WXX/raw/` locally at runtime; preserve the directory if it already exists, never clean it automatically, and fail with a clear error if the directory cannot be created.
+2. Manage the local runtime raw-data directory:
+   - create `weekly/YYYY-WXX/raw/` at runtime
+   - preserve the directory if it already exists
+   - never clean the directory automatically
+   - fail with a clear error if the directory cannot be created
 3. Fetch a small stable list of official xAI/Grok pages maintained in a separate reviewed config file, such as `scripts/sources.json`, with each entry containing at minimum a source name and URL.
 4. Use `requests` and `trafilatura` if dependency approval and advisory review pass.
 5. Apply polite scraping practices:
