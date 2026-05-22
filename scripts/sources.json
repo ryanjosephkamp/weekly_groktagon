@@ -1,0 +1,28 @@
+{
+  "sources": [
+    {
+      "name": "xAI home",
+      "url": "https://x.ai/"
+    },
+    {
+      "name": "xAI blog",
+      "url": "https://x.ai/blog"
+    },
+    {
+      "name": "xAI news",
+      "url": "https://x.ai/news"
+    },
+    {
+      "name": "Grok home",
+      "url": "https://grok.x.ai/"
+    },
+    {
+      "name": "xAI docs",
+      "url": "https://docs.x.ai/"
+    },
+    {
+      "name": "xAI developer release notes",
+      "url": "https://docs.x.ai/developers/release-notes"
+    }
+  ]
+}
