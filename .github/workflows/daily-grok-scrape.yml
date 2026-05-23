@@ -58,6 +58,7 @@ jobs:
           print(f"- Dry run: `{summary['dry_run']}`")
           print(f"- Artifact file count: `{summary['artifact_file_count']}`")
           print(f"- Bundle file: `{summary.get('bundle_file', 'not generated')}`")
+          print(f"- Summary snippets file: `{summary.get('summary_snippets_file', 'not generated')}`")
           print(f"- Artifact name: `{artifact_name}`")
           PY
         env:
