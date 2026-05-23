@@ -26,8 +26,11 @@ The daily source collection workflow now uses the optimized official xAI source 
 - xAI docs: <https://docs.x.ai/>
 - xAI developer release notes: <https://docs.x.ai/developers/release-notes>
 - xAI API: <https://x.ai/api>
+- xAI Cloud Console: <https://console.x.ai/>
+- xAI developer models: <https://docs.x.ai/developers/models>
+- xAI developer pricing: <https://docs.x.ai/developers/pricing>
 
-Each workflow artifact includes the individual source JSON files, `manifest.json`, and a consolidated Markdown bundle named with the `scrape-bundle-YYYY-WXX-YYYYMMDD-HHMMSS.md` pattern. Raw scrape outputs and scrape-derived artifacts remain private workflow artifacts and must not be committed.
+Each workflow artifact includes the individual source JSON files, `manifest.json`, a consolidated Markdown bundle named with the `scrape-bundle-YYYY-WXX-YYYYMMDD-HHMMSS.md` pattern, and `summary-snippets.md` for quick review. Raw scrape outputs and scrape-derived artifacts remain private workflow artifacts and must not be committed.
 
 ## Public Content Standards
 
@@ -68,5 +71,6 @@ weekly_groktagon/
 - `planning/gpt-5.5-setup-plan.md`
 - `planning/docs/scrape-bundle-artifact-addendum.md`
 - `planning/docs/scrape-sources-optimization-addendum.md`
+- `planning/docs/scrape-sources-enhancement-addendum.md`
 - `scripts/sources.json`
 - `assets/README.md`

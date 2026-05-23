@@ -19,6 +19,18 @@
     {
       "name": "xAI API",
       "url": "https://x.ai/api"
+    },
+    {
+      "name": "xAI Cloud Console",
+      "url": "https://console.x.ai/"
+    },
+    {
+      "name": "xAI developer models",
+      "url": "https://docs.x.ai/developers/models"
+    },
+    {
+      "name": "xAI developer pricing",
+      "url": "https://docs.x.ai/developers/pricing"
     }
   ]
 }

@@ -254,6 +254,49 @@ def generate_scrape_bundle_markdown(
     return bundle_filename
 
 
+def first_sentences(value: str | None, sentence_limit: int = 3) -> str:
+    if not value:
+        return "No extracted text available."
+    normalized = re.sub(r"\s+", " ", value).strip()
+    if not normalized:
+        return "No extracted text available."
+    sentences = re.split(r"(?<=[.!?])\s+", normalized)
+    selected = [sentence.strip() for sentence in sentences if sentence.strip()][:sentence_limit]
+    return " ".join(selected) if selected else normalized
+
+
+def generate_summary_snippets_markdown(
+    *,
+    output_dir: Path,
+    target_week: str,
+    run_started_at: str,
+    source_results: list[tuple[str, dict[str, Any]]],
+) -> str:
+    snippets_filename = "summary-snippets.md"
+    lines = [
+        f"# Scrape Summary Snippets — {target_week}",
+        "",
+        f"**Run started:** {run_started_at}",
+        f"**Source count:** {len(source_results)}",
+        "",
+    ]
+
+    for filename, result in source_results:
+        title = result.get("title") or result.get("name") or "Untitled source"
+        lines.extend(
+            [
+                f"## {filename}",
+                "",
+                f"Title: {title}",
+                f"First sentences: {first_sentences(result.get('extracted_text'))}",
+                "",
+            ]
+        )
+
+    (output_dir / snippets_filename).write_text("\n".join(lines), encoding="utf-8")
+    return snippets_filename
+
+
 def build_summary(
     *,
     run_started_at: str,
@@ -263,6 +306,7 @@ def build_summary(
     dry_run: bool,
     artifact_file_count: int,
     bundle_file: str | None = None,
+    summary_snippets_file: str | None = None,
 ) -> dict[str, Any]:
     summary = {
         "run_started_at": run_started_at,
@@ -274,6 +318,8 @@ def build_summary(
     }
     if bundle_file:
         summary["bundle_file"] = bundle_file
+    if summary_snippets_file:
+        summary["summary_snippets_file"] = summary_snippets_file
     return summary
 
 
@@ -347,6 +393,12 @@ def main() -> int:
         source_results=source_results,
         blocking_failures=blocking_failures,
     )
+    summary_snippets_file = generate_summary_snippets_markdown(
+        output_dir=output_dir,
+        target_week=target_week,
+        run_started_at=run_started_at,
+        source_results=source_results,
+    )
 
     summary = build_summary(
         run_started_at=run_started_at,
@@ -354,8 +406,9 @@ def main() -> int:
         source_count=len(sources),
         output_dir=str(output_dir),
         dry_run=False,
-        artifact_file_count=len(manifest_entries) + 2,
+        artifact_file_count=len(manifest_entries) + 3,
         bundle_file=bundle_file,
+        summary_snippets_file=summary_snippets_file,
     )
     if args.summary_file:
         write_json(Path(args.summary_file), summary)
